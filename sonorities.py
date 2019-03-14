@@ -10,7 +10,8 @@ from TFMethods import TimeFrequencyDecomposition as TF
 from MaskingMethods import FrequencyMasking as fm
 import scipy.signal as sig
 import numpy as np
-import cPickle as pickle
+# import cPickle as pickle
+import _pickle as pickle
 import IOMethods as IO
 import os, sys
 
@@ -120,8 +121,10 @@ def remix_solo(x):
     # Check for os, to avoid some windows crushes
     plat = sys.platform
     if plat  == 'linux' or plat == 'linux2' or plat == 'darwin' :
-        ww = pickle.load(open('solo_suppression_mag.p', 'rb'))
-        wwpan = pickle.load(open('pannet_mag.p', 'rb'))
+        ww = pickle.load(open('solo_suppression_mag.p', 'rb'), encoding='latin1')
+        # ww = pickle.load(open('solo_suppression_mag.p', 'rb'))
+        wwpan = pickle.load(open('pannet_mag.p', 'rb'), encoding='latin1')
+        # wwpan = pickle.load(open('pannet_mag.p', 'rb'))
     else :
         fileA = open('solo_suppression_mag.p', 'rb')
         ww = pickle.load(fileA,encoding='latin1')

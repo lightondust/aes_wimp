@@ -49,8 +49,8 @@ class TimeFrequencyDecomposition:
         X = fft(fftbuffer)
 
         # Acquire magnitude and phase spectrum
-        magX = (np.abs(X[:hlfN]))
-        phsX = (np.angle(X[:hlfN]))
+        magX = (np.abs(X[:int(hlfN)]))
+        phsX = (np.angle(X[:int(hlfN)]))
 
         return magX, phsX
 
@@ -127,8 +127,8 @@ class TimeFrequencyDecomposition:
         w = w / sum(w)
 
         # Initialize storing matrix
-        xmX = np.zeros((len(x)/hop, N/2 + 1), dtype = np.float32)
-        xpX = np.zeros((len(x)/hop, N/2 + 1), dtype = np.float32)
+        xmX = np.zeros((int(len(x)/hop), int(N/2 + 1)), dtype = np.float32)
+        xpX = np.zeros((int(len(x)/hop), int(N/2 + 1)), dtype = np.float32)
 
         # Analysis Loop
         while pin <= pend:
@@ -260,8 +260,10 @@ class TimeFrequencyDecomposition:
         Sin = np.zeros((N,lfb), dtype = np.float32)
 
         # Generate Matrices
-        for k in xrange(0, lfb):
-            for n in xrange(0, N):
+        for k in range(0, lfb):
+        # for k in xrange(0, lfb):
+            # for n in xrange(0, N):
+            for n in range(0, N):
                 Cos[n, k] = win[k] * np.cos(np.pi/N * (n + 0.5) * (k + 0.5 + N/2)) * np.sqrt(2. / N)
                 Sin[n, k] = win[k] * np.sin(np.pi/N * (n + 0.5) * (k + 0.5 + N/2)) * np.sqrt(2. / N)
 
@@ -297,7 +299,8 @@ class TimeFrequencyDecomposition:
         Cos, Sin = TimeFrequencyDecomposition.coreModulation(win, N)
 
         # Perform Complex Analysis
-        for m in xrange(0, nTimeSlots):
+        for m in range(0, nTimeSlots):
+        # for m in xrange(0, nTimeSlots):
             ycos[m, :] = np.dot(x[m * N : m * N + lfb], Cos.T)
             ysin[m, :] = np.dot(x[m * N : m * N + lfb], Sin.T)
 
@@ -335,7 +338,8 @@ class TimeFrequencyDecomposition:
         zsin = np.zeros((1, SignalLength), dtype = np.float32)
 
         # Perform Complex Synthesis
-        for m in xrange(0, nTimeSlots):
+        for m in range(0, nTimeSlots):
+        # for m in xrange(0, nTimeSlots):
             zcos[0, m * N : m * N + lfb] += np.dot(np.real(y[m, :]).T, Cos)
             zsin[0, m * N : m * N + lfb] += np.dot(np.imag(y[m, :]).T, Sin)
 
@@ -372,7 +376,8 @@ class TimeFrequencyDecomposition:
         zcos = np.zeros((1, SignalLength), dtype = np.float32)
 
         # Perform Complex Synthesis
-        for m in xrange(0, nTimeSlots):
+        for m in range(0, nTimeSlots):
+        # for m in xrange(0, nTimeSlots):
             zcos[0, m * N : m * N + lfb] += np.dot((y[m, :]).T, Cos)
 
         xrec = zcos

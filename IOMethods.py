@@ -337,7 +337,8 @@ class AudioIO:
 		# Sound call
 		player.play()
 		# Killed by "keyboard"
-		kill = raw_input()
+		# kill = raw_input()
+		kill = input()
 		if kill or kill == '':
 			AudioIO.stop()
 		# Remove the dummy wave write
@@ -357,7 +358,8 @@ class AudioIO:
 
 if __name__ == "__main__":
 	# Define File
-	myReadFile = 'EnterYourWavFile.wav'
+	# myReadFile = 'EnterYourWavFile.wav'
+	myReadFile = './wav/vald_1.wav'
 
 	# Read the file
 	x, fs = AudioIO.wavRead(myReadFile, mono = True)
